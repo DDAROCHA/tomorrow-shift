@@ -22,7 +22,7 @@ export const Input = ({ onSubmit }) => {
         onChange={(e) => setInput(e.target.value)}
       />
       <button onClick={handleSubmit} className="button">
-        Add
+        Add Employee
       </button>
     </div>
   );
