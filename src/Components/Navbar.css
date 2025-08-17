@@ -39,7 +39,7 @@
   cursor: pointer;
 }
 
-/* Responsive: en móviles */
+/* Responsive: for mmobiles */
 @media (max-width: 768px) {
   .menu {
     display: none;

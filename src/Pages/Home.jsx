@@ -125,7 +125,7 @@ export function Home() {
 
     const style = {
       transform: CSS.Transform.toString(transform),
-      transition: `${transition}, height 0.3s ease`,
+      transition: transition,
       background: "#f2f2f3",
       padding: "0 15px",
       borderRadius: "5px",
@@ -136,6 +136,7 @@ export function Home() {
       marginBottom: "0px",
       height: `${baseHeight * valor}px`,
       boxSizing: "border-box",
+      outline: "1px dotted black", 
     };
 
     const handleDeleteClick = (e) => {
@@ -146,7 +147,7 @@ export function Home() {
     return (
       <div ref={setNodeRef} style={style} {...attributes}>
         <div style={{ display: "flex", alignItems: "center", gap: "10px" }} {...listeners}>
-          <span style={{ cursor: "grab" }}>☰</span>
+          <span style={{ cursor: "grab" }}>⋮⋮</span> {/* ✅ icono de puntos */}
           <span>{title}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
