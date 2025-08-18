@@ -1,0 +1,59 @@
+.task {
+  padding: 0 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: blue;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+  outline: 1px dotted black; /* dotted outline */
+}
+
+/* Left side (drag + title) */
+.task-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.drag-handle {
+  cursor: grab;
+}
+
+.task-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right side (controls) */
+.task-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.task-hours {
+  min-width: 30px;
+  text-align: center;
+  color: black;
+}
+
+/* Buttons (+, -, 🗑️) */
+.task-btn {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn {
+  color: red;
+}

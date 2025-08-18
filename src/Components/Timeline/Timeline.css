@@ -1,0 +1,29 @@
+.timeline {
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-hour {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #ccc;
+  font-size: 12px;
+  font-weight: bold;
+  color: black;
+  box-sizing: border-box;
+}
+
+/* Backgrounds by time range */
+.timeline-hour.morning {
+  background-color: #fff59d; /* light yellow */
+}
+
+.timeline-hour.day {
+  background-color: #d9a441; /* ochre */
+}
+
+.timeline-hour.night {
+  background-color: #f8bbd0; /* light pink */
+}

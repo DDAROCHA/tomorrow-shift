@@ -7,6 +7,7 @@ import {
   useSensor,
   useSensors,
   closestCorners,
+  DragOverlay,
 } from "@dnd-kit/core";
 import {
   SortableContext,
@@ -17,7 +18,6 @@ import { CSS } from "@dnd-kit/utilities";
 import { arrayMove, sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import { Input } from "../Components/Input/Input";
 
-
 export function Home() {
   const APP_ID = "F405D13E-0A77-400C-ACBE-8146E8285936";
   const API_KEY = "BC70880E-34E2-4992-AB6C-C87592ED3A5B";
@@ -26,6 +26,7 @@ export function Home() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [activeId, setActiveId] = useState(null);
 
   const baseHeight = 35; // altura base de 1 hora
 
@@ -103,7 +104,12 @@ export function Home() {
 
   const getTaskPos = (id) => tasks.findIndex((task) => task.id === id);
 
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
+  };
+
   const handleDragEnd = async (event) => {
+    setActiveId(null);
     const { active, over } = event;
     if (!over || active.id === over.id) return;
     const originalPos = getTaskPos(active.id);
@@ -121,13 +127,13 @@ export function Home() {
     }
   };
 
-  function SortableItem({ id, title, valor, onDelete }) {
+  function SortableItem({ id, title, valor, onDelete, overlay = false }) {
     const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
     const style = {
       transform: CSS.Transform.toString(transform),
-      transition: `${transition}, height 0.3s ease`,
-      background: "#f2f2f3",
+      transition: transition,
+      background: overlay ? "#e0e0e0" : "#f2f2f3",
       padding: "0 15px",
       borderRadius: "5px",
       display: "flex",
@@ -137,12 +143,25 @@ export function Home() {
       marginBottom: "0px",
       height: `${baseHeight * valor}px`,
       boxSizing: "border-box",
-      outline: "1px dotted black", 
+      outline: "1px dotted black",
     };
 
     const handleDeleteClick = (e) => {
       e.stopPropagation();
-      onDelete(id);
+      if (onDelete) onDelete(id);
+    };
+
+    const buttonStyle = {
+      background: "white",
+      border: "1px solid #ccc",
+      borderRadius: "4px",
+      width: "28px",
+      height: "28px",
+      fontSize: "16px",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
     };
 
     return (
@@ -152,16 +171,20 @@ export function Home() {
           <span>{title}</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-          <button onClick={() => decrementValor(id)}>-</button>
-          <span style={{ minWidth: "25px", textAlign: "center", color: "black" }}>{valor}h</span>
-          <button onClick={() => incrementValor(id)}>+</button>
-          <button
-            onClick={handleDeleteClick}
-            style={{ background: "none", border: "none", fontSize: "16px", cursor: "pointer", color: "red" }}
-            title="Eliminar"
-          >
-            🗑️
-          </button>
+          <button onClick={() => decrementValor(id)} style={buttonStyle}>-</button>
+          <span style={{ minWidth: "30px", textAlign: "center", color: "black" }}>
+            {valor}h
+          </span>
+          <button onClick={() => incrementValor(id)} style={buttonStyle}>+</button>
+          {onDelete && (
+            <button
+              onClick={handleDeleteClick}
+              style={{ ...buttonStyle, color: "red" }}
+              title="Eliminar"
+            >
+              🗑️
+            </button>
+          )}
         </div>
       </div>
     );
@@ -194,9 +217,9 @@ export function Home() {
           {Array.from({ length: 24 }).map((_, i) => {
             const hour = (6 + i) % 24;
             let bgColor = "";
-            if (hour >= 6 && hour <= 11) bgColor = "#fff59d"; // amarillo claro
-            else if (hour >= 12 && hour <= 23) bgColor = "#d9a441"; // ocre
-            else bgColor = "#f8bbd0"; // rosa claro
+            if (hour >= 6 && hour <= 11) bgColor = "#fff59d";
+            else if (hour >= 12 && hour <= 23) bgColor = "#d9a441";
+            else bgColor = "#f8bbd0";
 
             const ampm = hour < 12 || hour === 24 ? "AM" : "PM";
             const displayHour = hour % 12 === 0 ? 12 : hour % 12;
@@ -225,7 +248,12 @@ export function Home() {
 
         {/* TASKS */}
         <div style={{ flex: 1 }}>
-          <DndContext sensors={sensors} collisionDetection={closestCorners} onDragEnd={handleDragEnd}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCorners}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+          >
             <SortableContext items={tasks.map((t) => t.id)} strategy={verticalListSortingStrategy}>
               {tasks.map((task) => (
                 <SortableItem
@@ -237,6 +265,18 @@ export function Home() {
                 />
               ))}
             </SortableContext>
+
+            {/* Overlay para el item arrastrado */}
+            <DragOverlay>
+              {activeId ? (
+                <SortableItem
+                  id={activeId}
+                  title={tasks.find((t) => t.id === activeId)?.title}
+                  valor={tasks.find((t) => t.id === activeId)?.valor}
+                  overlay
+                />
+              ) : null}
+            </DragOverlay>
           </DndContext>
         </div>
       </div>
