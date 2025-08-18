@@ -4,13 +4,17 @@ import { CSS } from "@dnd-kit/utilities";
 import "./SortableItem.css";
 
 export function SortableItem({ id, title, valor, onDelete, incrementValor, decrementValor, baseHeight = 35, overlay = false }) {
+  // ---------------------------
+  // useSortable hook
+  // ---------------------------
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition: transition,
+    transition,
     background: overlay ? "#e0e0e0" : "#f2f2f3",
-    height: `${baseHeight * valor}px`, // height depends on hours
+    height: `${baseHeight * valor}px`,
+    touchAction: "pan-y", // allow vertical scroll while dragging on mobile
   };
 
   const handleDeleteClick = (e) => {
@@ -19,10 +23,13 @@ export function SortableItem({ id, title, valor, onDelete, incrementValor, decre
   };
 
   return (
-    <div ref={setNodeRef} style={style} className="task" {...attributes}>
+    <div ref={setNodeRef} style={style} className="task">
       {/* Left side: drag handle + employee name */}
-      <div className="task-left" {...listeners}>
-        <span className="drag-handle">⋮⋮</span>
+      <div className="task-left">
+        {/* Only the handle has DnD listeners */}
+        <span className="drag-handle" {...listeners} {...attributes}>
+          ⋮⋮
+        </span>
         <span className="task-title">{title}</span>
       </div>
 

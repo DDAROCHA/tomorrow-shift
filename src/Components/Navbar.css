@@ -1,22 +1,35 @@
+/* Contenedor principal del navbar */
 .navbar {
   background-color: #282c34;
   padding: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* centra todo horizontalmente */
 }
 
+/* Contenedor interno que centra botón y menú */
 .navbar-container {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
+  justify-content: center;  /* centra horizontalmente */
+  align-items: center;      /* centra verticalmente */
+  width: 100%;
+  max-width: 800px;         /* opcional: ancho máximo */
+  flex-wrap: wrap;          /* permite que en móvil se apilen */
+  gap: 1rem;                /* separación entre botón y links */
 }
 
+/* Menú de navegación */
 .menu {
   display: flex;
   gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
+  justify-content: center; /* centra los links dentro del contenedor */
+  width: auto;             /* se ajusta al contenido */
 }
 
+/* Estilo de los links */
 .menu-link {
   color: white;
   text-decoration: none;
@@ -30,8 +43,9 @@
   background: #555;
 }
 
+/* Botón hamburguesa */
 .menu-btn {
-  display: none;
+  display: none; /* oculto en escritorio */
   background: transparent;
   border: none;
   color: white;
@@ -39,19 +53,27 @@
   cursor: pointer;
 }
 
-/* Responsive: for mmobiles */
+/* Responsive: para pantallas menores a 768px */
 @media (max-width: 768px) {
+  .navbar-container {
+    flex-direction: column; /* botón y menú apilados */
+    align-items: center;    /* centrado horizontal */
+  }
+
   .menu {
-    display: none;
+    display: none;          /* oculto por defecto */
     flex-direction: column;
     margin-top: 1rem;
+    width: 100%;            /* ocupa todo el ancho del contenedor */
+    align-items: center;    /* centra los links en móvil */
   }
 
   .menu.open {
-    display: flex;
+    display: flex;          /* se muestra al hacer clic en el botón */
   }
 
   .menu-btn {
-    display: block;
+    display: block;         /* visible en móvil */
+    align-self: center;     /* centra el botón */
   }
 }

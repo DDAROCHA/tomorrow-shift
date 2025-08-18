@@ -3,6 +3,7 @@ import {
   DndContext,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   closestCorners,
@@ -21,7 +22,7 @@ import { SortableItem } from "../Components/SortableItem/SortableItem";
 
 import { getTasks, saveTask, deleteTask } from "../services/backend";
 
-import './Home.css';
+import "./Home.css";
 
 export function Home() {
   // ---------------------------
@@ -91,11 +92,9 @@ export function Home() {
   // Update working hours (valor)
   // ---------------------------
   const updateValor = async (id, newValor) => {
-    // Update state immediately
     setTasks((tasks) =>
       tasks.map((task) => (task.id === id ? { ...task, valor: newValor } : task))
     );
-    // Save to backend
     try {
       await saveTask({ objectId: id, Valor: newValor });
     } catch (err) {
@@ -103,7 +102,7 @@ export function Home() {
     }
   };
 
-  // Increase working hours (max 8)
+  // Increment / Decrement valor (hours)
   const incrementValor = (id) => {
     const task = tasks.find((t) => t.id === id);
     if (!task) return;
@@ -111,7 +110,6 @@ export function Home() {
     updateValor(id, newValor);
   };
 
-  // Decrease working hours (min 1)
   const decrementValor = (id) => {
     const task = tasks.find((t) => t.id === id);
     if (!task) return;
@@ -120,15 +118,19 @@ export function Home() {
   };
 
   // ---------------------------
-  // Drag & Drop configuration
+  // DnD-kit sensors configuration
   // ---------------------------
   const sensors = useSensors(
     useSensor(PointerSensor),
+    useSensor(TouchSensor), // Enable touch support for mobile
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
   const getTaskPos = (id) => tasks.findIndex((task) => task.id === id);
 
+  // ---------------------------
+  // Drag & Drop handlers
+  // ---------------------------
   const handleDragStart = (event) => {
     setActiveId(event.active.id);
   };
@@ -138,7 +140,6 @@ export function Home() {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    // Reorder tasks in state
     const originalPos = getTaskPos(active.id);
     const newPos = getTaskPos(over.id);
 
@@ -148,7 +149,6 @@ export function Home() {
 
     setTasks(reorderedTasks);
 
-    // Save new order to backend
     try {
       await Promise.all(
         reorderedTasks.map((task, index) =>
@@ -165,30 +165,21 @@ export function Home() {
   // Render component
   // ---------------------------
   return (
-    <div>
+    <div className="home-container">
       <h4>Assign Employees for Tomorrow’s Shift</h4>
 
-      {/* Show spinner while loading */}
       {loading && <Spinner text="Loading..." />}
-
-      {/* Show error if something went wrong */}
       {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {/* Input to add new employees */}
-      <div style={{ marginBottom: "15px" }}>
-        <Input
-          onSubmit={addTask}
-          buttonLabel="Add Employee"   // Configurable button text
-        />
+      <div className="home-input">
+        <Input onSubmit={addTask} buttonLabel="Add Employee" />
       </div>
 
-      {/* Layout: left timeline + right tasks */}
-      <div style={{ display: "flex", gap: "0px" }}>
-        {/* Left timeline with 24h slots */}
+      {/* Layout: timeline + task list */}
+      <div className="home-layout">
         <Timeline baseHeight={baseHeight} />
 
-        {/* Right: draggable list of employees */}
-        <div style={{ flex: 1 }}>
+        <div className="home-task-list">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCorners}
@@ -213,7 +204,6 @@ export function Home() {
               ))}
             </SortableContext>
 
-            {/* Overlay element shown while dragging */}
             <DragOverlay>
               {activeId ? (
                 <SortableItem

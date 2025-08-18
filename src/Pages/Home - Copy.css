@@ -1,0 +1,50 @@
+/* Estilos generales de la página Home */
+.home-container {
+  background-color: #282c34; /* Fondo oscuro */
+  color: white;              /* Texto blanco */
+  min-height: 100vh;         /* Ocupa toda la pantalla */
+  padding: 20px;             /* Espaciado interno */
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Título de la página */
+.home-container h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Layout principal: timeline a la izquierda y lista de tasks a la derecha */
+.home-layout {
+  display: flex;
+  gap: 20px;          /* espacio entre timeline y tasks */
+  flex: 1;
+  justify-content: center; /* centra horizontalmente */
+}
+
+/* Lista de tasks (derecha) */
+.home-task-list {
+  width: 400px;     /* ancho fijo de la lista */
+  max-width: 100%;  /* no excede el ancho de la pantalla */
+}
+
+/* Contenedor del input */
+.home-input {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center; /* centra horizontalmente */
+}
+
+/* Input en sí */
+.home-input input {
+  width: 300px;      /* ancho fijo para el campo */
+  max-width: 100%;   /* no se pasa en pantallas chicas */
+  margin-right: 10px;
+}
+
+/* Botón del input */
+.home-input button {
+  padding: 6px 12px;
+}

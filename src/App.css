@@ -1,5 +1,6 @@
 .App-header {
   background-color: #282c34;
+  color: white;
   display: flex;
   justify-content: center; /* centra horizontalmente todo el bloque */
   align-items: center;

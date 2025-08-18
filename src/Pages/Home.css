@@ -1,26 +1,63 @@
-.App {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.App-header {
+/* Container for the entire Home page */
+.home-container {
   background-color: #282c34;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
   color: white;
+  min-height: 100vh;
   padding: 20px;
-  flex-shrink: 0;
-}
-
-.App-content {
-  flex: 1;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
+}
+
+/* Page title */
+.home-container h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Input container */
+.home-input {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.home-input input {
+  width: 70%;
+  max-width: 100%;
+  margin-right: 10px;
+}
+
+.home-input button {
+  padding: 6px 12px;
+}
+
+/* Layout: timeline + task list */
+.home-layout {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-task-list {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+  .home-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-task-list {
+    width: 90%;
+  }
 }
