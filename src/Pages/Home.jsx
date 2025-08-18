@@ -21,6 +21,8 @@ import { SortableItem } from "../Components/SortableItem/SortableItem";
 
 import { getTasks, saveTask, deleteTask } from "../services/backend";
 
+import './Home.css';
+
 export function Home() {
   // ---------------------------
   // Local state
