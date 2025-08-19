@@ -10,13 +10,21 @@
   box-sizing: border-box;
   outline: 1px dotted black;
   touch-action: pan-y; /* allow vertical scrolling while dragging */
+
+  max-width: 320px; /* Ajusta según tu diseño */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 8px;
 }
 
 /* Left side: handle + title */
 .task-left {
   display: flex;
   align-items: center;
-  gap: 10px;
+/*  gap: 10px; */
+  flex: 1;
+  min-width: 0; /* Importante para que el ellipsis funcione en flex */
 }
 
 /* Drag handle */
@@ -69,3 +77,5 @@
 .delete-btn {
   color: red;
 }
+
+

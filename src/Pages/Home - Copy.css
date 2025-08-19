@@ -39,7 +39,7 @@
 /* Layout: timeline + task list */
 .home-layout {
   display: flex;
-  gap: 20px;
+  gap: 5px;
   width: 100%;
   justify-content: center;  /* center layout horizontally */
   flex-wrap: nowrap;        /* prevent wrapping: tasks always stay on the right */

@@ -1,0 +1,79 @@
+/* Container for a single task */
+.task {
+  width: 300px !important;     
+  min-width: 300px !important; 
+  max-width: 300px !important; 
+  padding: 0 15px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: blue;
+  margin-bottom: 0px;
+  box-sizing: border-box;
+  outline: 1px dotted black;
+  touch-action: pan-y; /* allow vertical scrolling while dragging */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* Left side: handle + title */
+.task-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0 !important; /* necesario para que el ellipsis funcione */
+}
+
+/* Drag handle */
+.drag-handle {
+  cursor: grab;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Employee title */
+.task-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Right side: controls (+, -, hours, delete) */
+.task-controls {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.task-hours {
+  min-width: 30px !important;
+  text-align: center;
+  color: black;
+}
+
+/* Buttons (+, -, delete) */
+.task-btn {
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 28px;
+  height: 28px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn {
+  color: red;
+}

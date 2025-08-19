@@ -7,7 +7,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;   /* 👈 centra todo horizontalmente */
 }
 
 /* Page title */
@@ -21,7 +21,7 @@
 .home-input {
   margin-bottom: 15px;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* 👈 centra el input */
   width: 100%;
   max-width: 600px;
 }
@@ -40,35 +40,38 @@
 .home-layout {
   display: flex;
   gap: 5px;
+  justify-content: center; /* 👈 centra la fila completa */
+  flex-wrap: nowrap;
+  align-items: flex-start;
   width: 100%;
-  justify-content: center;  /* center layout horizontally */
-  flex-wrap: nowrap;        /* prevent wrapping: tasks always stay on the right */
 }
 
 /* Timeline: left side */
 .timeline-container {
-  flex: 1;            /* timeline takes remaining space */
-  min-width: 150px;   /* prevent shrinking too much on small screens */
+  flex: 1 1 auto !important;   /* ocupa el resto del espacio */
+  min-width: 150px !important;
+  max-width: calc(100% - 300px) !important; /* nunca invade la lista */
 }
 
 /* Task list: right side */
 .home-task-list {
-  width: 300px;       /* fixed width for tasks */
-  max-width: 40%;     /* scale with screen but stay at right */
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
+  flex: 0 0 300px !important;  /* fijo: no crece ni se achica */
+  flex-shrink: 0 !important;
+  flex-grow: 0 !important;
+  flex-basis: 300px !important;
+  align-self: flex-start !important;
 }
 
-/* Responsive adjustments: mainly adjust widths, but keep layout */
+/* Responsive adjustments (solo para input, NO toca columnas) */
 @media (max-width: 768px) {
-  .home-task-list {
-    width: 250px;     /* reduce task list width slightly on mobile */
-    max-width: 50%;   /* keep it proportional */
-  }
-
   .timeline-container {
-    min-width: 120px; /* allow timeline to shrink a bit */
+    min-width: 120px !important;
   }
 
   .home-input input {
-    width: 60%;       /* reduce input width */
+    width: 60% !important;
   }
 }
