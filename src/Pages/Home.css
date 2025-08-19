@@ -48,27 +48,27 @@
 
 /* Timeline: left side */
 .timeline-container {
-  flex: 1 1 auto !important;   /* ocupa el resto del espacio */
-  min-width: 150px !important;
-  max-width: calc(100% - 300px) !important; /* nunca invade la lista */
+  flex: 1 1 auto;   /* ocupa el resto del espacio */
+  min-width: 150px;
+  max-width: calc(100% - 300px); /* nunca invade la lista */
 }
 
 /* Task list: right side */
 .home-task-list {
-  width: 300px !important;
-  min-width: 300px !important;
-  max-width: 300px !important;
-  flex: 0 0 300px !important;  /* fijo: no crece ni se achica */
-  flex-shrink: 0 !important;
-  flex-grow: 0 !important;
-  flex-basis: 300px !important;
-  align-self: flex-start !important;
+  width: 300px;
+  min-width: 300px;
+  max-width: 300px;
+  flex: 0 0 300px;  /* fijo: no crece ni se achica */
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex-basis: 300px;
+  align-self: flex-start;
 }
 
 /* Responsive adjustments (solo para input, NO toca columnas) */
 @media (max-width: 768px) {
   .timeline-container {
-    min-width: 120px !important;
+    min-width: 120px;
   }
 
   .home-input input {

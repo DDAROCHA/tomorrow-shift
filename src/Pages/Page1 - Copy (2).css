@@ -1,0 +1,46 @@
+.page1-container {
+  background-color: #282c34;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page1-container h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.page1-block {
+  width: 350px;
+  border: 1px solid white;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.page1-line {
+  margin: 5px 0;
+}
+
+.page1-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.page1-input input {
+  flex: 1;
+  padding: 6px 8px;
+}
+
+.page1-input button {
+  padding: 6px 12px;
+  cursor: pointer;
+}

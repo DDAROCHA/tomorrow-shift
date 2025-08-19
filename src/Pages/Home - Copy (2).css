@@ -7,7 +7,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  align-items: stretch !important;   /* fuerza ocupar todo el ancho */
+  align-items: center;   /* 👈 centra todo horizontalmente */
 }
 
 /* Page title */
@@ -21,7 +21,7 @@
 .home-input {
   margin-bottom: 15px;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* 👈 centra el input */
   width: 100%;
   max-width: 600px;
 }
@@ -40,16 +40,17 @@
 .home-layout {
   display: flex;
   gap: 5px;
+  justify-content: center; /* 👈 centra la fila completa */
+  flex-wrap: nowrap;
+  align-items: flex-start;
   width: 100%;
-  justify-content: flex-start !important;
-  flex-wrap: nowrap !important;
-  align-items: flex-start !important;
 }
 
 /* Timeline: left side */
 .timeline-container {
-  flex: 1 1 auto !important;        /* ocupa el resto del espacio */
+  flex: 1 1 auto !important;   /* ocupa el resto del espacio */
   min-width: 150px !important;
+  max-width: calc(100% - 300px) !important; /* nunca invade la lista */
 }
 
 /* Task list: right side */
@@ -57,10 +58,11 @@
   width: 300px !important;
   min-width: 300px !important;
   max-width: 300px !important;
-  flex: 0 0 300px !important;       /* fijo: no crece ni se achica */
+  flex: 0 0 300px !important;  /* fijo: no crece ni se achica */
   flex-shrink: 0 !important;
   flex-grow: 0 !important;
   flex-basis: 300px !important;
+  align-self: flex-start !important;
 }
 
 /* Responsive adjustments (solo para input, NO toca columnas) */

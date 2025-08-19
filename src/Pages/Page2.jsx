@@ -1,8 +1,10 @@
 
+import "./Page2.css";
+
 export function Page2() {
 
     return (
-        <div style={{ padding: "20px", fontFamily: "Arial" }}>
+        <div className="page2-container">
             <h4>Page2 - About</h4>
 
 

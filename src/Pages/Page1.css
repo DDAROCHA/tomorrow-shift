@@ -1,0 +1,86 @@
+.page1-container {
+  background-color: #282c34;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page1-container h4 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Bloque de texto 350px con borde blanco */
+.page1-block {
+  width: 350px;
+  border: 1px solid white;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+
+.page1-line {
+  margin: 5px 0;
+}
+
+/* Input + botón centrados */
+.page1-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.page1-input input {
+  flex: 1;
+  padding: 6px 8px;
+}
+
+/* ================================
+   Botón "Send" – estilo consistente
+   ================================ */
+.page1-input .send-btn {
+  /* reset mínimo para que no cambie entre navegadores */
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  background: #0d6efd;    /* celeste/azul */
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  line-height: 1.2;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+/* hover gris (levemente más apagado) como pediste */
+.page1-input .send-btn:hover {
+  /*background: #0b5ed7;     un tono más oscuro */
+  background-color: #555;
+}
+
+/* focus ring accesible */
+.page1-input .send-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* active */
+.page1-input .send-btn:active {
+  background: #0a58ca;
+  border-color: #094db1;
+}
+
+/* disabled */
+.page1-input .send-btn:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+  box-shadow: none;
+}

@@ -1,76 +1,107 @@
 import React, { useEffect, useState } from "react";
-import Backendless from 'backendless'
-
-
-//console.log( "--> Aca esta Diego!")
-
+import { getTasks, saveEnviar } from "../services/backend";
+import { Spinner } from "../Components/Spinner/Spinner";
+import "./Page1.css";
 
 export function Page1() {
-    const APP_ID = 'F405D13E-0A77-400C-ACBE-8146E8285936';
-    const API_KEY = 'BC70880E-34E2-4992-AB6C-C87592ED3A5B';
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState("");
+  const [sending, setSending] = useState(false);
 
-    Backendless.initApp(APP_ID, API_KEY);
+  const baseHour = 6; // los turnos arrancan a las 6am
 
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+  useEffect(() => {
+    getTasks()
+      .then((results) => {
+        const formatted = results
+          .sort((a, b) => a.Orden - b.Orden)
+          .map((item) => ({
+            id: item.objectId,
+            title: item.Item || "Untitled",
+            valor: item.Valor != null ? Number(item.Valor) : 1,
+          }));
+        setTasks(formatted);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err.message);
+        setLoading(false);
+      });
+  }, []);
 
-    useEffect(() => {
-        Backendless.Data.of("Person").findFirst()
-            .then(result => {
-                setData(result);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error("Error:", err.message);
-                setError("Error al obtener datos: " + err.message);
-                setLoading(false);
-            });
-    }, []); // Solo se ejecuta 1 vez al montar
+  // Convierte hora en formato AM/PM
+  const formatHour = (hour) => {
+    const h = hour % 24;
+    const suffix = h >= 12 ? "pm" : "am";
+    const display = h % 12 === 0 ? 12 : h % 12;
+    return `${display}${suffix}`;
+  };
 
-    return (
-        <div style={{ padding: "20px", fontFamily: "Arial" }}>
-            <h4>Page1 - Backendless</h4>
+  // Construye texto de turno
+  const buildShiftText = (task, index) => {
+    const startHour = baseHour + tasks.slice(0, index).reduce((acc, t) => acc + t.valor, 0);
+    const endHour = startHour + task.valor;
+    return `${task.title} from ${formatHour(startHour)} to ${formatHour(endHour)}`;
+  };
 
-            {loading && (
-                <div style={{ textAlign: "center", marginTop: "50px" }}>
-                    <div className="spinner"></div>
-                    <p>Cargando datos...</p>
-                </div>
-            )}
+  const handleSend = async () => {
+    if (!email) {
+      alert("Please enter an email address.");
+      return;
+    }
+    setSending(true);
 
-            {error && (
-                <p style={{ color: "red" }}>{error}</p>
-            )}
+    const lines = tasks.map((t, i) => buildShiftText(t, i));
 
-            {data && (
-                <div>
-                    <h5>Datos de la primera persona:</h5>
-                    <ul>
+    const mensaje = `
+      <p>Hi, this is the full rotation for tomorrow's shift:</p>
+      <ul>
+        ${lines.map((line) => `<li>${line}</li>`).join("")}
+      </ul>
+      <p>Sincerely,<br/>The manager.</p>
+    `;
 
-                        <li><b>Nombre:</b> {data.name}</li>
-                        <li><b>Dirección:</b> {data.address}</li>
+    try {
+      await saveEnviar({ mail: email, mensaje });
+      alert("Shift rotation sent for approval");
+      setEmail("");
+    } catch (err) {
+      console.error("Error saving message:", err.message);
+      alert("Could not save the message.");
+    } finally {
+      setSending(false);
+    }
+  };
 
-                    </ul>
-                </div>
-            )}
+  return (
+    <div className="page1-container">
+      <h4>Tomorrow’s Shift Overview</h4>
 
-            {/* Spinner CSS */}
-            <style>{`
-                .spinner {
-                    border: 8px solid #f3f3f3;
-                    border-top: 8px solid #3498db;
-                    border-radius: 50%;
-                    width: 60px;
-                    height: 60px;
-                    animation: spin 1s linear infinite;
-                    margin: auto;
-                }
-                @keyframes spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-            `}</style>
+      {loading ? (
+        <Spinner text="Loading employees..." />
+      ) : (
+        <div className="page1-block">
+          {tasks.map((task, index) => (
+            <div key={task.id} className="page1-line">
+              {buildShiftText(task, index)}
+            </div>
+          ))}
         </div>
-    );
+      )}
+
+      {/* Input email */}
+      <div className="page1-input">
+        <input
+          type="email"
+          placeholder="Enter email address..."
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button onClick={handleSend} disabled={sending} className="send-btn">
+          {sending ? "Sending..." : "Send"}
+        </button>
+      </div>
+    </div>
+  );
 }
