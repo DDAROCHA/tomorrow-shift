@@ -3,6 +3,7 @@ import {
   DndContext,
   KeyboardSensor,
   PointerSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   closestCorners,
@@ -101,6 +102,7 @@ export function Home() {
     }
   };
 
+  // Increment / Decrement valor (hours)
   const incrementValor = (id) => {
     const task = tasks.find((t) => t.id === id);
     if (!task) return;
@@ -116,15 +118,19 @@ export function Home() {
   };
 
   // ---------------------------
-  // Drag & Drop configuration
+  // DnD-kit sensors configuration
   // ---------------------------
   const sensors = useSensors(
     useSensor(PointerSensor),
+    useSensor(TouchSensor), // Enable touch support for mobile
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
   const getTaskPos = (id) => tasks.findIndex((task) => task.id === id);
 
+  // ---------------------------
+  // Drag & Drop handlers
+  // ---------------------------
   const handleDragStart = (event) => {
     setActiveId(event.active.id);
   };
@@ -169,7 +175,7 @@ export function Home() {
         <Input onSubmit={addTask} buttonLabel="Add Employee" />
       </div>
 
-      {/* Layout: timeline + lista de tasks */}
+      {/* Layout: timeline + task list */}
       <div className="home-layout">
         <Timeline baseHeight={baseHeight} />
 

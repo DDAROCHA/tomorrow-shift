@@ -39,25 +39,36 @@
 /* Layout: timeline + task list */
 .home-layout {
   display: flex;
-  gap: 20px;
+  gap: 5px;
   width: 100%;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: center;  /* center layout horizontally */
+  flex-wrap: nowrap;        /* prevent wrapping: tasks always stay on the right */
 }
 
+/* Timeline: left side */
+.timeline-container {
+  flex: 1;            /* timeline takes remaining space */
+  min-width: 150px;   /* prevent shrinking too much on small screens */
+}
+
+/* Task list: right side */
 .home-task-list {
-  width: 100%;
-  max-width: 400px;
+  width: 300px;       /* fixed width for tasks */
+  max-width: 40%;     /* scale with screen but stay at right */
 }
 
-/* Responsive adjustments for mobile */
+/* Responsive adjustments: mainly adjust widths, but keep layout */
 @media (max-width: 768px) {
-  .home-layout {
-    flex-direction: column;
-    align-items: center;
+  .home-task-list {
+    width: 250px;     /* reduce task list width slightly on mobile */
+    max-width: 50%;   /* keep it proportional */
   }
 
-  .home-task-list {
-    width: 90%;
+  .timeline-container {
+    min-width: 120px; /* allow timeline to shrink a bit */
+  }
+
+  .home-input input {
+    width: 60%;       /* reduce input width */
   }
 }

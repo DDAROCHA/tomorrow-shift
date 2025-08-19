@@ -1,50 +1,74 @@
-/* Estilos generales de la página Home */
+/* Container for the entire Home page */
 .home-container {
-  background-color: #282c34; /* Fondo oscuro */
-  color: white;              /* Texto blanco */
-  min-height: 100vh;         /* Ocupa toda la pantalla */
-  padding: 20px;             /* Espaciado interno */
+  background-color: #282c34;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-/* Título de la página */
+/* Page title */
 .home-container h4 {
   margin-top: 0;
   margin-bottom: 20px;
   text-align: center;
 }
 
-/* Layout principal: timeline a la izquierda y lista de tasks a la derecha */
-.home-layout {
-  display: flex;
-  gap: 20px;          /* espacio entre timeline y tasks */
-  flex: 1;
-  justify-content: center; /* centra horizontalmente */
-}
-
-/* Lista de tasks (derecha) */
-.home-task-list {
-  width: 400px;     /* ancho fijo de la lista */
-  max-width: 100%;  /* no excede el ancho de la pantalla */
-}
-
-/* Contenedor del input */
+/* Input container */
 .home-input {
   margin-bottom: 15px;
   display: flex;
-  justify-content: center; /* centra horizontalmente */
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
 }
 
-/* Input en sí */
 .home-input input {
-  width: 300px;      /* ancho fijo para el campo */
-  max-width: 100%;   /* no se pasa en pantallas chicas */
+  width: 70%;
+  max-width: 100%;
   margin-right: 10px;
 }
 
-/* Botón del input */
 .home-input button {
   padding: 6px 12px;
+}
+
+/* Layout: timeline + task list */
+.home-layout {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: center;  /* center layout horizontally */
+  flex-wrap: nowrap;        /* prevent wrapping: tasks always stay on the right */
+}
+
+/* Timeline: left side */
+.timeline-container {
+  flex: 1;            /* timeline takes remaining space */
+  min-width: 150px;   /* prevent shrinking too much on small screens */
+}
+
+/* Task list: right side */
+.home-task-list {
+  width: 300px;       /* fixed width for tasks */
+  max-width: 40%;     /* scale with screen but stay at right */
+}
+
+/* Responsive adjustments: mainly adjust widths, but keep layout */
+@media (max-width: 768px) {
+  .home-task-list {
+    width: 250px;     /* reduce task list width slightly on mobile */
+    max-width: 50%;   /* keep it proportional */
+  }
+
+  .timeline-container {
+    min-width: 120px; /* allow timeline to shrink a bit */
+  }
+
+  .home-input input {
+    width: 60%;       /* reduce input width */
+  }
 }

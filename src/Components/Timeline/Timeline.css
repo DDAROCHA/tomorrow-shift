@@ -13,6 +13,7 @@
   font-weight: bold;
   color: black;
   box-sizing: border-box;
+  border-radius: 5px;
 }
 
 /* Backgrounds by time range */
@@ -25,5 +26,5 @@
 }
 
 .timeline-hour.night {
-  background-color: #f8bbd0; /* light pink */
+  background-color: #7779fa; /* light pink */
 }

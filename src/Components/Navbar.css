@@ -1,35 +1,38 @@
-/* Contenedor principal del navbar */
+/* Reset body and html to prevent horizontal scroll */
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Navbar: full width background with padding */
 .navbar {
   background-color: #282c34;
   padding: 1rem;
-  width: 100%;
-  display: flex;
-  justify-content: center; /* centra todo horizontalmente */
+  box-sizing: border-box;   /* include padding in width calculation */
+  width: 100%;              /* full container width */
 }
 
-/* Contenedor interno que centra botón y menú */
+/* Inner container: limited width, centered */
 .navbar-container {
   display: flex;
-  justify-content: center;  /* centra horizontalmente */
-  align-items: center;      /* centra verticalmente */
+  justify-content: center;   /* center menu horizontally */
+  align-items: center;
+  max-width: 800px;          /* max width of navbar content */
+  margin: 0 auto;            /* center content horizontally */
   width: 100%;
-  max-width: 800px;         /* opcional: ancho máximo */
-  flex-wrap: wrap;          /* permite que en móvil se apilen */
-  gap: 1rem;                /* separación entre botón y links */
 }
 
-/* Menú de navegación */
+/* Navigation menu */
 .menu {
   display: flex;
   gap: 1rem;
   list-style: none;
   margin: 0;
   padding: 0;
-  justify-content: center; /* centra los links dentro del contenedor */
-  width: auto;             /* se ajusta al contenido */
 }
 
-/* Estilo de los links */
+/* Links inside the menu */
 .menu-link {
   color: white;
   text-decoration: none;
@@ -43,9 +46,9 @@
   background: #555;
 }
 
-/* Botón hamburguesa */
+/* Hamburger menu button (mobile) */
 .menu-btn {
-  display: none; /* oculto en escritorio */
+  display: none;
   background: transparent;
   border: none;
   color: white;
@@ -53,27 +56,26 @@
   cursor: pointer;
 }
 
-/* Responsive: para pantallas menores a 768px */
+/* Responsive styles for mobile screens */
 @media (max-width: 768px) {
   .navbar-container {
-    flex-direction: column; /* botón y menú apilados */
-    align-items: center;    /* centrado horizontal */
+    flex-direction: column; /* stack button and menu vertically */
+    align-items: flex-start; 
   }
 
   .menu {
-    display: none;          /* oculto por defecto */
+    display: none;
     flex-direction: column;
     margin-top: 1rem;
-    width: 100%;            /* ocupa todo el ancho del contenedor */
-    align-items: center;    /* centra los links en móvil */
+    width: 100%; /* full width in mobile */
   }
 
   .menu.open {
-    display: flex;          /* se muestra al hacer clic en el botón */
+    display: flex;
   }
 
   .menu-btn {
-    display: block;         /* visible en móvil */
-    align-self: center;     /* centra el botón */
+    display: block;
+    align-self: flex-end; /* hamburger button aligned right */
   }
 }
