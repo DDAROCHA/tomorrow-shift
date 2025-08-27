@@ -1,0 +1,279 @@
+{
+  "flow": {
+    "id": "AB91838E-C485-465B-9148-761434778066",
+    "name": "SendShiftMail"
+  },
+  "flowVersion": {
+    "id": "9986B8CF-9D27-0E68-4998-C4C83E28C743",
+    "description": "Manda el mail de la App Tomorrow Shift",
+    "firstElementId": "5BE8C458-8FF6-67E8-F778-574AC1A11BA8",
+    "elements": [
+      {
+        "id": "5BE8C458-8FF6-67E8-F778-574AC1A11BA8",
+        "name": "Record Created in Database",
+        "flowElementId": "320893FB-A8B6-944C-2078-F05CD3AB1068",
+        "groupId": null,
+        "type": "TRIGGER",
+        "nextElementIds": [
+          "51382F28-6F69-07B8-D478-6B67C82A6E89"
+        ],
+        "nextGroupIds": [],
+        "clientMetadata": {
+          "position": {
+            "x": 615,
+            "y": 285
+          },
+          "elementId": "record-created",
+          "resultAlias": "Record Created",
+          "isFirstElement": true,
+          "blockDefinitionId": "record-created"
+        },
+        "metaInfo": {
+          "onFailElemId": null,
+          "storeResult": true,
+          "logging": {
+            "input": {
+              "logData": false,
+              "message": null
+            },
+            "output": null
+          },
+          "clientValidationState": {
+            "valid": true,
+            "errorMessage": null
+          },
+          "type": "EVENT",
+          "condition": null,
+          "authInfo": {
+            "type": "NONE",
+            "requiredRoles": [],
+            "onFailPolicy": "ERROR"
+          },
+          "slaConditions": [],
+          "service": "DATA_SERVICE",
+          "operationId": 1,
+          "tableId": "9A7EB947-3CAD-43B7-BE84-69B1FE3F1708",
+          "objectId": null
+        },
+        "serverFields": {
+          "learningStatus": "OFF"
+        }
+      },
+      {
+        "id": "51382F28-6F69-07B8-D478-6B67C82A6E89",
+        "name": "Send Message",
+        "flowElementId": "D6A8C438-5088-B8DB-41A8-467821ADA4CC",
+        "groupId": null,
+        "type": "ACTION",
+        "nextElementIds": [],
+        "nextGroupIds": [],
+        "clientMetadata": {
+          "notes": "Sends emails through Gmail for AI agents to automate customer communication, send notifications, deliver reports, or trigger follow-up messages. Perfect for automated support responses, marketing campaigns, or personalized outreach based on user actions.",
+          "methodId": "JS###v1###GmailService###sendMessage",
+          "position": {
+            "x": 1114.7286361900651,
+            "y": 380.1301645002966
+          },
+          "elementId": "JS###v1###GmailService###sendMessage",
+          "methodName": "sendMessage",
+          "resultAlias": "Send Message Result",
+          "isFirstElement": false,
+          "blockDefinitionId": "api-service-method"
+        },
+        "metaInfo": {
+          "onFailElemId": null,
+          "storeResult": true,
+          "logging": {
+            "input": {
+              "logData": false,
+              "message": null
+            },
+            "output": {
+              "logData": false,
+              "message": null
+            }
+          },
+          "clientValidationState": {
+            "valid": true,
+            "errorMessage": null
+          },
+          "type": "BACKENDLESS",
+          "slaConditions": [],
+          "enabled": true,
+          "simulationResult": null,
+          "subtype": "API_SERVICE",
+          "userSession": null,
+          "serviceName": "GmailService",
+          "modelName": "v1",
+          "lang": "JS",
+          "methodName": "sendMessage",
+          "connectionId": "a6d52240-1748-4c9a-a9ed-91e5a6e03280",
+          "hostType": "SHARED",
+          "uriPlaceholderValues": [],
+          "uriParams": [],
+          "bodyParams": [
+            {
+              "type": "SIMPLE",
+              "name": "to",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [
+                  {
+                    "id": "RESULT",
+                    "label": "Record Created",
+                    "value": "5BE8C458-8FF6-67E8-F778-574AC1A11BA8",
+                    "subPath": "mail",
+                    "type": "TRIGGER_DATA"
+                  }
+                ],
+                "resultType": "STRING"
+              }
+            },
+            {
+              "type": "SIMPLE",
+              "name": "subject",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [
+                  {
+                    "id": "TEXT",
+                    "label": null,
+                    "value": "Tomorrow's Shift Overview for Approval - App",
+                    "type": "INPUT"
+                  }
+                ],
+                "resultType": "STRING"
+              }
+            },
+            {
+              "type": "SIMPLE",
+              "name": "bodyType",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [
+                  {
+                    "id": "TEXT",
+                    "label": null,
+                    "value": "html",
+                    "type": "INPUT"
+                  }
+                ],
+                "resultType": "STRING"
+              }
+            },
+            {
+              "type": "SIMPLE",
+              "name": "body content",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [
+                  {
+                    "id": "RESULT",
+                    "label": "Record Created",
+                    "value": "5BE8C458-8FF6-67E8-F778-574AC1A11BA8",
+                    "subPath": "mensaje",
+                    "type": "TRIGGER_DATA"
+                  }
+                ],
+                "resultType": "STRING"
+              }
+            },
+            {
+              "type": "SIMPLE",
+              "name": "from",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [
+                  {
+                    "id": "TEXT",
+                    "label": null,
+                    "value": "TOMORROW SHIFT APP",
+                    "type": "INPUT"
+                  }
+                ],
+                "resultType": "STRING"
+              }
+            },
+            {
+              "type": "SIMPLE",
+              "name": "cc",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [],
+                "resultType": "ARRAY"
+              }
+            },
+            {
+              "type": "SIMPLE_LIST",
+              "name": "bcc",
+              "value": [
+                {
+                  "mode": "EXPRESSION",
+                  "expression": [
+                    {
+                      "id": "TEXT",
+                      "label": null,
+                      "value": "ddarocha00@gmail.com",
+                      "type": "INPUT"
+                    }
+                  ],
+                  "resultType": null
+                }
+              ]
+            },
+            {
+              "type": "SIMPLE",
+              "name": "threadId",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [],
+                "resultType": "STRING"
+              }
+            },
+            {
+              "type": "SIMPLE",
+              "name": "attachments",
+              "value": {
+                "mode": "EXPRESSION",
+                "expression": [],
+                "resultType": "STRING"
+              }
+            }
+          ]
+        },
+        "serverFields": {
+          "learningStatus": "OFF"
+        }
+      }
+    ],
+    "groups": [],
+    "clientMetadata": {
+      "autoSave": true,
+      "viewport": {
+        "x": -355.61314268030605,
+        "y": -190.7886154601323,
+        "zoom": 1
+      }
+    },
+    "metaInfo": {
+      "wasLive": true,
+      "schedule": null,
+      "errorMessage": null,
+      "sharedMemory": {
+        "anchor": {
+          "type": "FLOW_MEMORY",
+          "path": null,
+          "missingAnchorPolicy": null
+        },
+        "expirationInSec": null
+      },
+      "executionStaticData": [],
+      "initialData": null,
+      "ownerFlowVersionId": null
+    }
+  },
+  "slaGoals": [],
+  "slaCalendars": [],
+  "subFlows": [],
+  "exportDate": "2025-08-27T14:58:14.439Z"
+}
